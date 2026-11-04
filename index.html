@@ -1,17 +1,39 @@
-<!doctype=html>
+<!DOCTYPE html>
 <html lang="ja">
-  <head>
-    <meta charest="UTF-8">
-    <title>あああ</title>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>フィルタリング比較実験</title>
     <style>
-    h1
-      {
-        color:red;
-        font-size:24px;
-      }
-      </style>
-  </head>
-  <body>
-    <h1>tntn</h1>
-  </body>
+        body { font-family: sans-serif; max-width: 800px; margin: 30px auto; padding: 0 20px; background: #f5f5f5; }
+        .box { background: white; padding: 20px; margin-bottom: 30px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        h2 { color: #333; margin-top: 0; border-bottom: 2px solid #ddd; padding-bottom: 8px; }
+        iframe, video { width: 100%; max-width: 560px; height: 315px; background: #000; border: none; }
+        .desc { font-size: 14px; color: #666; margin-top: 10px; }
+    </style>
+</head>
+<body>
+
+    <h1>フィルタリング挙動 比較実験</h1>
+    <p>学校のネットワーク環境で、どちらがブロックされるか（または通信が発生するか）を実験します。</p>
+
+    <!-- 実験1: 通常のYouTube埋め込み (iframe) -->
+    <div class="box">
+        <h2>実験1: 通常のYouTube埋め込み (&lt;iframe&gt;)</h2>
+        <iframe src="https://youtube.com" allowfullscreen></iframe>
+        <div class="desc">
+            <strong>チェックポイント:</strong> 学校のフィルタリングが「youtube.com」のドメイン自体、あるいはiframeタグそのものをブロックしている場合、このエリアはグレーアウトするか「接続が拒否されました」と表示されます。
+        </div>
+    </div>
+
+    <!-- 実験2: 通常の動画タグ (video) ※Cloudflare経由の最終形態のイメージ -->
+    <div class="box">
+        <h2>実験2: 通常の動画タグ (&lt;video&gt;)</h2>
+        <video src="https://googleapis.com" controls></video>
+        <div class="desc">
+            <strong>チェックポイント:</strong> YouTubeの気配が一切ない、ただのmp4ファイル（ストリーミング通信）です。Cloudflare Workersで中継を成功させた場合、ブラウザやフィルタリングからはこの「実験2」と同じ状態に見えることになります。これが再生できれば、理論上Cloudflare作戦は成功します。
+        </div>
+    </div>
+
+</body>
 </html>
